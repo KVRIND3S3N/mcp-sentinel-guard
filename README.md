@@ -12,17 +12,6 @@ Standard MCP servers execute LLM commands blindly. **MCP Sentinel Guard** introd
 
 It uses **LLM-as-a-Judge** (Google Gemini 2.0 Flash) to semantically analyze every request. If a threat is detected, it blocks the request, logs the incident, and sends a real-time email alert to the admin.
 
-## 🏗️ Architecture
-
-```mermaid
-graph LR
-    A[Host / Client] -->|Request| B(Sentinel Gateway);
-    B -->|Analyze| C{Gemini AI Judge};
-    C -- Safe --> D[Vulnerable Server];
-    C -- Dangerous --> E[BLOCK & ALERT];
-    E -->|Notification| F[Email Admin];
-    E -->|Audit| G[Security Log];
-
 
 
 ✨ Key Features
@@ -58,6 +47,7 @@ graph LR
 
     Start the Gateway & Host Simulation
     python attack_test.py
+
 
     Project Structure
 
