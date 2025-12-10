@@ -15,16 +15,27 @@ async def run_attack():
         async with ClientSession(read, write) as session:
             await session.initialize()
             
-            # TEST 1: MASUM İSTEK
+            # --- TEST 1: MASUM İSTEK ---
             print("\n🔹 TEST 1: Masum İstek Gönderiliyor...")
-            res1 = await session.call_tool("read_public_data", arguments={"query": "Hava Durumu"})
-            print(f"   CEVAP: {res1.content[0].text}")
+            try:
+                res1 = await session.call_tool("read_public_data", arguments={"query": "Hava Durumu"})
+                print(f"   CEVAP: {res1.content[0].text}")
+            except Exception as e:
+                print(f"   HATA: {e}")
 
-            # TEST 2: SALDIRI
+            # --- MOLA (GOOGLE KIZMASIN DİYE) ---
+            print("\n⏳ 5 Saniye bekleniyor (Rate Limit onlemi)...")
+            await asyncio.sleep(5) 
+
+            # --- TEST 2: SALDIRI ---
             print("\n🔹 TEST 2: Saldırı Yapılıyor (Silme)...")
-            res2 = await session.call_tool("delete_system_files", arguments={"file_path": "C:/Windows"})
-            print(f"   CEVAP: {res2.content[0].text}")
+            try:
+                res2 = await session.call_tool("delete_system_files", arguments={"file_path": "C:/Windows"})
+                print(f"   CEVAP: {res2.content[0].text}")
+            except Exception as e:
+                 print(f"   HATA: {e}")
 
 if __name__ == "__main__":
-    if sys.platform == 'win32': asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    if sys.platform == 'win32':
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     asyncio.run(run_attack())

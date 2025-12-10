@@ -15,7 +15,8 @@ import notification_service    # Haberleşme (Mail)
 API_KEY = os.getenv("GOOGLE_API_KEY")
 
 genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel('gemini-2.0-flash')
+# Listendeki en hızlı ve hafif modeli seçiyoruz:
+model = genai.GenerativeModel('gemini-flash-latest')
 
 mcp = FastMCP("Sentinel Security Gateway")
 

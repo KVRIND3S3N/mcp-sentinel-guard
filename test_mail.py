@@ -5,9 +5,9 @@ import sys
 # --- AYARLAR (Lütfen Doldur) ---
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-MY_EMAIL = "furkanorm@gmail.com"
-MY_PASSWORD = "ihaj ygcu zhdm obah"  # <--- 16 haneli kod buraya
-TO_EMAIL = "furkanorm@gmail.com"
+MY_EMAIL = "GMAIL_USER"
+MY_PASSWORD = "GMAIL_APP_PASSWORD"  # <--- 16 haneli kod buraya
+TO_EMAIL = "GMAIL_USER"
 
 def mail_testi_yap():
     print(f"🔌 1. Sunucuya bağlanılıyor ({SMTP_SERVER}:{SMTP_PORT})...")
