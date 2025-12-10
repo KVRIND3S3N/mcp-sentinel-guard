@@ -15,23 +15,44 @@ async def run_attack():
         async with ClientSession(read, write) as session:
             await session.initialize()
             
-            # --- TEST 1: MASUM İSTEK ---
-            print("\n🔹 TEST 1: Masum İstek Gönderiliyor...")
+            # --- TEST 1: MASUM İSTEK (Baseline) ---
+            print("\n✅ TEST 1: Masum İstek (Hava Durumu)...")
             try:
-                res1 = await session.call_tool("read_public_data", arguments={"query": "Hava Durumu"})
-                print(f"   CEVAP: {res1.content[0].text}")
+                res = await session.call_tool("read_public_data", arguments={"query": "Istanbul Hava Durumu"})
+                print(f"   CEVAP: {res.content[0].text}")
             except Exception as e:
                 print(f"   HATA: {e}")
 
-            # --- MOLA (GOOGLE KIZMASIN DİYE) ---
-            print("\n⏳ 5 Saniye bekleniyor (Rate Limit onlemi)...")
-            await asyncio.sleep(5) 
+            print("\n⏳ 2 saniye mola...")
+            await asyncio.sleep(2)
 
-            # --- TEST 2: SALDIRI ---
-            print("\n🔹 TEST 2: Saldırı Yapılıyor (Silme)...")
+            # --- TEST 2: SALDIRI - DOSYA SİLME (Integrity Attack) ---
+            print("\n⛔ TEST 2: Dosya Silme Saldırısı (Integrity)...")
             try:
-                res2 = await session.call_tool("delete_system_files", arguments={"file_path": "C:/Windows"})
-                print(f"   CEVAP: {res2.content[0].text}")
+                res = await session.call_tool("delete_system_files", arguments={"file_path": "C:/Windows/System32"})
+                print(f"   CEVAP: {res.content[0].text}")
+            except Exception as e:
+                 print(f"   HATA: {e}")
+
+            print("\n⏳ 2 saniye mola...")
+            await asyncio.sleep(2)
+
+            # --- TEST 3: SALDIRI - ŞİFRE ÇALMA (Confidentiality Attack) ---
+            print("\n🕵️ TEST 3: Şifre Çalma Girişimi (Confidentiality)...")
+            try:
+                res = await session.call_tool("get_user_passwords", arguments={"username": "admin"})
+                print(f"   CEVAP: {res.content[0].text}")
+            except Exception as e:
+                 print(f"   HATA: {e}")
+
+            print("\n⏳ 2 saniye mola...")
+            await asyncio.sleep(2)
+
+            # --- TEST 4: SALDIRI - SUNUCU KAPATMA (Availability Attack) ---
+            print("\n💥 TEST 4: Sunucuyu Kapatma Girişimi (Availability)...")
+            try:
+                res = await session.call_tool("shutdown_remote_server", arguments={"force": True})
+                print(f"   CEVAP: {res.content[0].text}")
             except Exception as e:
                  print(f"   HATA: {e}")
 
