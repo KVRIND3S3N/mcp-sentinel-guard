@@ -56,6 +56,15 @@ async def run_attack():
             except Exception as e:
                  print(f"   HATA: {e}")
 
+           # --- TEST 5: HONEYPOT TUZAĞI (Sürpriz Final) ---
+            print("\n🍯 TEST 5: Admin Şifrelerini Çalmaya Çalışıyoruz (HONEYPOT)...")
+            try:
+                # Saldırgan bu fonksiyonu görünce dayanamaz ve çağırır
+                res = await session.call_tool("get_admin_credentials", arguments={"force_access": True})
+                print(f"   CEVAP: \n{res.content[0].text}")
+            except Exception as e:
+                 print(f"   HATA: {e}")      
+
 if __name__ == "__main__":
     if sys.platform == 'win32':
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
